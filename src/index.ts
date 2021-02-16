@@ -2,11 +2,11 @@
  * 	Imports
  *****************/
 
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
-import http from "http"
-import morgan from "morgan"
-
+const express = require('express')
+const http = require('http')
+const bodyParser = require("body-parser")
+const morgan = require('morgan')
+const router = require("./router")
 
 // Create an instance of express
 const app = express()
@@ -21,7 +21,8 @@ const app = express()
 app.use(morgan("combined"))
 //bodyParser parses json
 app.use(bodyParser.json({ type: "*/*" }))
-
+// Call our router function, pass the express instance as an argument
+router(app)
 
 
 /**********************

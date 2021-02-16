@@ -2,25 +2,24 @@
 /*****************
  * 	Imports
  *****************/
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var http_1 = __importDefault(require("http"));
-var morgan_1 = __importDefault(require("morgan"));
+var express = require('express');
+var http = require('http');
+var bodyParser = require("body-parser");
+var morgan = require('morgan');
+var router = require("./router");
 // Create an instance of express
-var app = express_1.default();
+var app = express();
 /******************
  * 	App Setup
  ******************/
 // Middlewares - All incoming requests to express
 // also pass through these.
 // Morgan is a logger for enhanced logging
-app.use(morgan_1.default("combined"));
+app.use(morgan("combined"));
 //bodyParser parses json
-app.use(body_parser_1.default.json({ type: "*/*" }));
+app.use(bodyParser.json({ type: "*/*" }));
+// Call our router function, pass the express instance as an argument
+router(app);
 /**********************
  * 	Server Setup
  **********************/
@@ -29,7 +28,7 @@ app.use(body_parser_1.default.json({ type: "*/*" }));
 var port = process.env.PORT || 8080;
 // Create an http server,
 // forward requests to our instance of express
-var server = http_1.default.createServer(app);
+var server = http.createServer(app);
 // Tell the server to listen to requests on
 // our chosen port.
 server.listen(port);
