@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 // Define our model
@@ -8,7 +8,4 @@ const userSchema = new Schema({
 })
 
 // Create the model class
-const ModelClass = mongoose.model('user', userSchema)
-
-// Export the model
-module.exports = ModelClass
+export const ModelClass = mongoose.model('user', userSchema)

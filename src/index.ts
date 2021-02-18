@@ -2,22 +2,28 @@
  * 	Imports
  *****************/
 
-const express = require('express')
-const http = require('http')
-const bodyParser = require("body-parser")
-const morgan = require('morgan')
-const router = require("./router")
-const mongoose = require("mongoose")
+import express from "express"
+import http from "http"
+import bodyParser from "body-parser"
+import morgan from "morgan"
+import { router } from "./router"
+import mongoose from "mongoose"
 
 // DB Setup
-mongoose.connect("mongodb://localhost:auth/auth")
-
+// From https://mongoosejs.com/docs/deprecations.html
+// ALSO NOTE:
+//    Replace update() with updateOne(), updateMany(), or replaceOne()
+//    Replace remove() with deleteOne() or deleteMany().
+//    Replace count() with countDocuments(), unless you want to 
+//    count how many documents are in the whole collection
+//    (no /filter). In the latter case, use estimatedDocumentCount().
+mongoose.connect('mongodb://localhost:27017/auth', {useNewUrlParser: true, useUnifiedTopology: true});
 // Create an instance of express
 const app = express()
 
 
 /******************
- * 	App Setupp
+ * 	App Setup
  ******************/
 // Middlewares - All incoming requests to express
 // also pass through these.

@@ -1,9 +1,9 @@
 import express from "express"
+import { signup } from "./controllers/authentication"
 
-module.exports = function (app: express.Express) {
-  app.get('/', function (req: express.Request, res: express.Response, next: express.NextFunction) {
-    res.send(["1","2","3"])
-  })
+export function router (app: express.Express) {
+
+  app.post("/signup", signup)
   
 
 }

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-module.exports = function (app) {
-    app.get('/', function (req, res, next) {
-        res.send(["1", "2", "3"]);
-    });
-};
+exports.router = void 0;
+var authentication_1 = require("./controllers/authentication");
+function router(app) {
+    app.post("/signup", authentication_1.signup);
+}
+exports.router = router;
