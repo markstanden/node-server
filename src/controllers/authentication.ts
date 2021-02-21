@@ -1,14 +1,41 @@
 import express from "express"
+const User = require('../models/user')
 
 export function signup (req: express.Request, res: express.Response, next: express.NextFunction) {
-  console.log (req.body)
-  // See if a user with the given email address exists
+  const email = req.body.email;
+  const password = req.body.password;
   
-  // If a user with email address does exist, return an error
+  if (!email || !password) {
+    return res.status(422).send({ error: "You must provide email and password"})
+  }
 
-  // If a user with email doesn't exist, create and save user record
+  // See if a user with the given email address exists
+  User.findOne({ email: email }, function(err, existingUser) {
+    if (err) { return next(err) }
 
-  // Respond to request indicating the user was created
+    // If a user with email address does exist, return an error
+    if (existingUser) {
+      return res.status(422).send({ error: "email is in use" })
+    }
+
+      // If a user with email doesn't exist, create and save user record
+    const user = new User({
+      email: email,
+      password: password
+    })
+    
+    user.save(function (err) {
+      if (err) { return next(err) }
+    
+      // Respond to request indicating the user was created
+      res.json({"success":true})
+  })
+    })
+  
+
+  
+
+  
 
 }
 
