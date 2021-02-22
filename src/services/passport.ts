@@ -4,13 +4,13 @@ import { User } from "../models/user"
 import { config } from "../config"
 
 // setup options for jwt strategy
-const wtOptions = {
+const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
   secretOrKey: config.secret
 }
 
 // create JWT strategy
-const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
+export const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
   // See if the user ID in the payload exists in our database
   User.findById(payload.sub, function (err, user) {
     if (err) {return done(err, false) }
