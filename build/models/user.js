@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
 var mongoose_1 = __importDefault(require("mongoose"));
 var bcrypt_nodejs_1 = __importDefault(require("bcrypt-nodejs"));
 var Schema = mongoose_1.default.Schema;
@@ -26,7 +27,7 @@ userSchema.pre('save', function (next) {
             if (err) {
                 return next(err);
             }
-            // overwrite plain text password with encrypted password.
+            // overwrite plain text password with encrypted password. 
             user.password = hash;
             next();
         });
@@ -34,4 +35,4 @@ userSchema.pre('save', function (next) {
 });
 // Create the model class
 var ModelClass = mongoose_1.default.model('user', userSchema);
-module.exports = ModelClass;
+exports.User = ModelClass;

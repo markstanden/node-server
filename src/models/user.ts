@@ -22,7 +22,7 @@ userSchema.pre('save', function (next) {
     bcrypt.hash(user.password, salt, null, function (err, hash) {
       if (err) { return next(err) }
       
-      // overwrite plain text password with encrypted password.
+      // overwrite plain text password with encrypted password. 
       user.password = hash
       next()
     
@@ -34,4 +34,4 @@ userSchema.pre('save', function (next) {
 
 // Create the model class
 const ModelClass = mongoose.model('user', userSchema)
-module.exports = ModelClass
+export { ModelClass as User }

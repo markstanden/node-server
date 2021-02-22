@@ -1,7 +1,15 @@
 import express from "express"
-const User = require('../models/user')
+import { User } from "../models/user"
+import jwt from "jwt-simple"
+import { config } from "../config"
 
-export function signup (req: express.Request, res: express.Response, next: express.NextFunction) {
+function tokenForUser(user) {
+  const timestamp = new Date().getTime()
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret)
+}
+
+
+export function signup(req: express.Request, res: express.Response, next: express.NextFunction) {
   const email = req.body.email;
   const password = req.body.password;
   
@@ -28,7 +36,7 @@ export function signup (req: express.Request, res: express.Response, next: expre
       if (err) { return next(err) }
     
       // Respond to request indicating the user was created
-      res.json({"success":true})
+      res.json({ token: tokenForUser(user) })
   })
     })
   
