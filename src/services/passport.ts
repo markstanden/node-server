@@ -4,7 +4,10 @@ import { User } from "../models/user"
 import { config } from "../config"
 
 // setup options for jwt strategy
-const wtOptions = {}
+const wtOptions = {
+  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  secretOrKey: config.secret
+}
 
 // create JWT strategy
 const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
@@ -28,3 +31,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
 })
 
 // Tell passprt to user this strategy
+passport.use(jwtLogin)
