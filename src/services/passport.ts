@@ -1,7 +1,16 @@
 import passport from "passport"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt"
+import * as LocalStrategy from "passport-local"
 import { User } from "../models/user"
 import { config } from "../config"
+
+// Create local strategy
+const localOptions = {
+  usernameField: "email",
+}
+const localLogin = new LocalStrategy(localOptions, function (email, password, done) {
+  
+})
 
 // setup options for jwt strategy
 const jwtOptions = {
@@ -25,7 +34,7 @@ export const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
   })
 
 
-  // If it dows, call "done" with that user
+  // If it does, call "done" with that user
   // otherwise, call done without a user object
 
 })
