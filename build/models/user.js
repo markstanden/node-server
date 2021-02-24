@@ -33,6 +33,14 @@ userSchema.pre('save', function (next) {
         });
     });
 });
+userSchema.methods.comparePassword = function (candidatePassword, callback) {
+    bcrypt_nodejs_1.default.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, isMatch);
+    });
+};
 // Create the model class
 var ModelClass = mongoose_1.default.model('user', userSchema);
 exports.User = ModelClass;

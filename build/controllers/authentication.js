@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = void 0;
+exports.signup = exports.signin = void 0;
 var user_1 = require("../models/user");
 var jwt_simple_1 = __importDefault(require("jwt-simple"));
 var config_1 = require("../config");
@@ -11,6 +11,12 @@ function tokenForUser(user) {
     var timestamp = new Date().getTime();
     return jwt_simple_1.default.encode({ sub: user.id, iat: timestamp }, config_1.config.secret);
 }
+function signin(req, res, next) {
+    // User has already been authenticated.
+    // We just need to issue a token
+    res.send({ token: tokenForUser(req.user) });
+}
+exports.signin = signin;
 function signup(req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
